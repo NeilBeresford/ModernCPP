@@ -14,15 +14,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 20)
 
 # Support for external libraries
-include(ExternalProjects)
+include(ExternalProject)
 
 # Git is needed for the external projects
 find_package(Git REQUIRED)
 
 # Doctest for unit testing
-ExternalProject Add(
+ExternalProject_Add(
     doctest
-    PREFIX $(CMAKE_BINARY_DIR)/doctest
+    PREFIX ${CMAKE_BINARY_DIR}/doctest
     GIT_REPOSITORY https://github.com/doctest/doctest.git
     TIMEOUT 10
     UPDATE_COMMAND ${GIT_EXECUTABLE} pull
