@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/Development/Projects/ModernC++/TestingProject
+cd ~/Development/Projects/ModernC++/TestingProject/Trunk
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,13 +13,14 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 CMakeList.txt
-badd +34 ~/Development/Projects/ModernC++/TestingProject/doctest/GenTests/CMakeList.txt
-badd +33 ~/Development/Projects/ModernC++/TestingProject/doctest/GenTests/src/main.cpp
+badd +1 ~/Development/Projects/ModernC++/TestingProject/Trunk/CMakeLists.txt
+badd +9 ~/Development/Projects/ModernC++/TestingProject/Trunk/GenTests/CMakeLists.txt
+badd +35 ~/Development/Projects/ModernC++/TestingProject/Trunk/GenTests/src/main.cpp
+badd +1 ~/Development/Projects/ModernC++/TestingProject/Trunk/GenTests/src/Modules/Test_Vectors.cpp
 argglobal
 %argdel
 $argadd CMakeList.txt
-edit ~/Development/Projects/ModernC++/TestingProject/doctest/GenTests/src/main.cpp
+edit ~/Development/Projects/ModernC++/TestingProject/Trunk/GenTests/src/main.cpp
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -33,7 +34,7 @@ set winheight=1
 set winminwidth=0
 set winwidth=1
 argglobal
-balt ~/Development/Projects/ModernC++/TestingProject/doctest/GenTests/CMakeList.txt
+balt ~/Development/Projects/ModernC++/TestingProject/Trunk/GenTests/src/Modules/Test_Vectors.cpp
 setlocal foldmethod=expr
 setlocal foldexpr=v:lua.require'lazyvim.util'.ui.foldexpr()
 setlocal foldmarker={{{,}}}
@@ -42,12 +43,12 @@ setlocal foldlevel=99
 setlocal foldminlines=1
 setlocal foldnestmax=20
 setlocal foldenable
-let s:l = 33 - ((32 * winheight(0) + 34) / 69)
+let s:l = 35 - ((34 * winheight(0) + 42) / 84)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 33
-normal! 079|
+keepjumps 35
+normal! 042|
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
