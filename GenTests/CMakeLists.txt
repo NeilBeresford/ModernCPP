@@ -1,19 +1,23 @@
 # ----------------------------------------------------------------------------------
 # Cmake - instructions for general testing of modern C++
+# Generates both the executable and the library used for testing
 # Note - will do documentation later
 # ----------------------------------------------------------------------------------
 
-# project name
+# project names
 project(ModernCppTests VERSION 1.0.0 LANGUAGES CXX)
+project(ModernCppTestsLib)
 
 # Add files
-file(GLOB_RECURSE SOURCES "src/*.cpp" "inc/*.h")
+file(GLOB_RECURSE SOURCES "src/*.cpp" "inc/*.h" "src/modules/*.cpp" "inc/modules/*.h")
+file(GLOB_RECURSE LIBSOURCES "inc/*.h" "src/modules/*.cpp" "inc/modules/*.h")
 
 # Add the executable
 add_executable(ModernCppTests ${SOURCES})
+add_library(ModernCppTestsLib ${LIBSOURCES})
 
 # targets for the executable
-target_include_directories(ModernCppTests PRIVATE inc)
+target_include_directories(ModernCppTests PRIVATE "inc" "inc/Modules" )
 
 # Doxgen for documentation generation
 find_package(Doxygen REQUIRED)
@@ -29,7 +33,5 @@ if (DOXYGEN_FOUND)
 else()
     message(WARNING "Doxygen not found, documentation will not be generated.")
 endif()
-
-
 
 # End of the CMakeLists.txt file
