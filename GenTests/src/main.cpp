@@ -24,17 +24,19 @@
     @param[in]  argv  The command line arguments.
     @return     Returns 0 on success, or a non-zero value on failure.
 */
-int main(int argc, char **argv) {
-
+int main( int argc, char** argv )
+{
+    // Print a message indicating that the tests are starting
     std::cout << "Running tests..." << std::endl;
 
-    // Initialize the test environment
+    // Initialize the test environment for simple functionality check.
+    // The main checking is done in TestGenTest using the doctest framework.
     Test_Vectors testVectors;
 
     // Run the test for random integers in vectors
-    if (!testVectors.testInts_RandonNumbers())
+    if ( !testVectors.testInts_RandomNumbers() )
     {
-        std::cerr << "Test failed: testInts_RandonNumbers" << std::endl;
+        std::cerr << "Test failed: testInts_RandomNumbers" << std::endl;
         return 1; // Return non-zero value to indicate failure
     }
 
