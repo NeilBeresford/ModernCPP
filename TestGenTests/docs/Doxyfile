@@ -2798,7 +2798,7 @@ DOT_CLEANUP            = YES
 # use a built-in version of mscgen tool to produce the charts. Alternatively,
 # the MSCGEN_TOOL tag can also specify the name an external tool. For instance,
 # specifying prog as the value, doxygen will call the tool as prog -T
-# <outfile_format> -o <outputfile> <inputfile>. The external tool should support
+# <binFile_format> -o <outputfile> <inputfile>. The external tool should support
 # output file formats "png", "eps", "svg", and "ismap".
 
 MSCGEN_TOOL            =

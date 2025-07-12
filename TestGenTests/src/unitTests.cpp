@@ -15,7 +15,10 @@
 
 // doctest unit testing framework setup
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
+#include <algorithm> // For std::sort
 #include "../../GenTests/inc/Modules/Test_Vectors.h"
+#include "../../GenTests/inc/Modules/Test_Lamda.h"
+#include "../../GenTests/inc/Modules/Test_File.h"
 #include "../../doctest/doctest/doctest.h"
 
 //-----------------------------------------------------------------------------
@@ -70,6 +73,77 @@ TEST_SUITE( "Test - ModernCPP" )
             CHECK( testVectors.testInts_DeleteRange( 0, 100 ) == false );                      // Out of bounds check
         }
     }
+    //-----------------------------------------------------------------------------
+    TEST_CASE( "Testing Lamda Functions" )
+    {
+        SUBCASE( "Testing Lamda Functions" )
+        {
+            // Example usage of the lambda functions
+            LamdaAddTemplate      cAddTemplate;
+            LamdaMultiplyTemplate cMultiplyTemplate;
+            LamdaDivideTemplate   cDivideTemplate;
+            LamdaSubtractTemplate cSubtractTemplate;
+
+            LamdaModulusTemplate  cModulusTemplate;
+            LamdaPowerTemplate    cPowerTemplate;
+
+            // Basic maths using ints
+            auto sum         = cAddTemplate.add( 5, 3 );
+            auto product     = cMultiplyTemplate.multiply( 5, 3 );
+            auto quotient    = cDivideTemplate.divide( 5, 3 );
+            auto difference  = cSubtractTemplate.subtract( 5, 3 );
+            auto mod         = cModulusTemplate.modulus( 5, 3 );
+            auto powerResult = cPowerTemplate.power( 2, 3 );
+
+            CHECK( sum == 8 );
+            CHECK( product == 15 );
+            CHECK( quotient == 1 ); // Allowing for floating point precision
+            CHECK( difference == 2 );
+            CHECK( mod == 2 );
+            CHECK( powerResult == 8 );
+
+            // Basic maths using doubles
+            auto sumDouble         = cAddTemplate.add( 5.5, 3.5 );
+            auto productDouble     = cMultiplyTemplate.multiply( 5.5, 3.5 );
+            auto quotientDouble    = cDivideTemplate.divide( 5.5, 3.5 );
+            auto differenceDouble  = cSubtractTemplate.subtract( 5.5, 3.5 );
+            auto powerResultDouble = cPowerTemplate.power( 2.0, 3.0 );
+            CHECK( sumDouble == 9.0 );
+            CHECK( productDouble == 19.25 );
+            CHECK( quotientDouble == doctest::Approx( 1.57143 ).epsilon( 0.00001 ) ); // Allowing for floating point precision
+            CHECK( differenceDouble == 2.0 );
+            CHECK( powerResultDouble == 8.0 );
+
+        } // End of Lamda Functions test
+    } // End of Lamda Functions test
+    //-----------------------------------------------------------------------------
+    TEST_CASE( "Testing File Operations" )
+    {
+        SUBCASE( "Testing text file operations" )
+        {
+            TextFile textFile;
+
+            CHECK( textFile.open( "test.txt" ) == true );
+            CHECK( textFile.write( "Hello, World!" ) == true );
+            std::string content;
+            CHECK( textFile.read( content ) == true );
+            CHECK( content == "Hello, World!" );
+            textFile.close();
+        } // End of Text File Operations test
+        SUBCASE( "Testing Binary File Operations" )
+        {
+            BinaryFile binaryFile;
+
+            CHECK( binaryFile.open( "test.bin" ) == true );
+            CHECK( binaryFile.write( "Hello, World!", 13 ) == true );
+            binaryFile.close();
+            CHECK( binaryFile.open( "test.bin" ) == true );
+            char buffer[ 14 ] = { 0 }; // Buffer to read 13 bytes +
+            CHECK( binaryFile.read( buffer, 13 ) == true );
+            CHECK( std::string( buffer ) == "Hello, World!" );
+            binaryFile.close();
+        } // End of Binary File Operations test
+    } // End of File Operations test
     //-----------------------------------------------------------------------------
     //-----------------------------------------------------------------------------
 } // Test - ModernCPP
